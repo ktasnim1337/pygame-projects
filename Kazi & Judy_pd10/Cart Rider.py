@@ -16,6 +16,12 @@ car.resizeBy(5)
 car.moveTo(300,700)
 
 car.setSpeed(1,180)
+game.drawBackground()
+car.draw()
+game.drawText("Cart Rider",game.width/4 ,game.height/4,Font(green,90,yellow))
+game.drawText("Press [SPACE] to Start",game.width/2 + 80,game.height - 50,Font(yellow,40,green))
+game.update(1)
+game.wait(K_SPACE)
 
 heart = Image("gameimages\\heart.png",game)
 heart =[]
@@ -96,11 +102,16 @@ while not game.over:
         if car.collidedWith(h,"squuare"):
             h.moveTo(randint(10,750),randint(-800,-50))
             h.resizeTo(863,558)
-            h.visible = True
-
+            
         if car.collidedWith(h):
-            game.score+=2
-  
+            game.score+=5
+
+        if car.collidedWith(b):
+            car.damage+=10
+            count+=1
+
+    if car.health <= 100:
+        game.over = True
 
 
             
@@ -109,13 +120,20 @@ while not game.over:
         car.resizeTo(800,600)
         car.moveTo(300,700)
 
-
+    if car.collidedWith(b):
+        game.health-=2
     
+    game.drawText("Car Health: " + str(car.health),100,5)
+  
                 
         
 
     
 
     game.update(60)
+game.drawText("Game Over",game.width/4,game.height/3,Font(green,90,yellow))
+game.drawText("Press [ESC] to Exit",game.width/2 + 80,game.height - 50,Font(yellow,40,green))
+game.update()
+game.wait(K_ESCAPE)
 game.quit()
 
